@@ -1,0 +1,32 @@
+<head>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+  <div id="graph"></div>
+  
+  <script>
+    
+Plotly.d3.csv('https://raw.githubusercontent.com/damienlittre/plotlytests/main/plotly.csv', (err, rows) => {
+  
+  // get unique Centres from the csv file
+  var Centres = [... new Set(rows.map(r => r.Centre))]
+  
+  // go through centers and, for each of them, set up
+  // the data
+  var data = Centres.map(y => {
+    var d = rows.filter(r => r.Centre === y)
+
+    return {
+      name: y,
+      x: d.map(r => r.Year),
+      y: d.map(r => r.ETP)
+    }
+  })
+  
+  Plotly.newPlot('graph', data)
+})
+    
+    
+  </script>
+  
+</body>
